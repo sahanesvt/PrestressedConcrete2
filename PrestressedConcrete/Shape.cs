@@ -85,10 +85,10 @@ namespace PrestressedConcrete
                 i++;
             }
             Area = posNeg * area;
-            CG_x = cg_x;
-            CG_y = cg_y;
-            I_x = posNeg * i_x;
-            I_y = posNeg * i_y;
+            CG_x = cg_x / (6 * area);
+            CG_y = cg_y / (6 * area);
+            I_x = posNeg * (i_x + area * Math.Pow(CG_y, 2));
+            I_y = posNeg * (i_y + area * Math.Pow(CG_x, 2));
 
         }
 
@@ -149,8 +149,8 @@ namespace PrestressedConcrete
             Area = posNeg * area;
             CG_x = cg_x / (6 * area);
             CG_y = cg_y / (6 * area);
-            I_x = posNeg * i_x;
-            I_y = posNeg * i_y;
+            I_x = posNeg * (i_x + area * Math.Pow(CG_y, 2));
+            I_y = posNeg * (i_y + area * Math.Pow(CG_x, 2));
 
         }
 
