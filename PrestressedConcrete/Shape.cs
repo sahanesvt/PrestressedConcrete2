@@ -14,6 +14,7 @@ namespace PrestressedConcrete
         public double CG_y { get; set; }
         public double I_x { get; private set; }
         public double I_y { get; set; }
+        public double Perimeter { get; set; }
 
         public Shape()
         {
@@ -22,6 +23,7 @@ namespace PrestressedConcrete
             CG_y = 0;
             I_x = 0;
             I_y = 0;
+            Perimeter = 0;
         }
 
         public Shape(double width, double depth, double cg_x, double cg_y, bool rightTriangle, bool void_)
@@ -36,6 +38,7 @@ namespace PrestressedConcrete
                 Area = posNeg * width * depth / 2;
                 I_x = posNeg * width * Math.Pow(depth, 3) / 36;
                 I_y = posNeg * depth * Math.Pow(width, 3) / 36;
+                Perimeter = width + depth + Math.Sqrt(Math.Pow(width,2) + Math.Pow(depth,2));
             }
 
             else
@@ -43,6 +46,7 @@ namespace PrestressedConcrete
                 Area = posNeg * width * depth;
                 I_x = posNeg * width * Math.Pow(depth, 3) / 12;
                 I_y = posNeg * depth * Math.Pow(width, 3) / 12;
+                Perimeter = 2 * (width + depth);
             }
         }
 
@@ -56,6 +60,7 @@ namespace PrestressedConcrete
             CG_y = cg_y;
             I_x = posNeg * Math.PI * Math.Pow(radius, 4) / 4;
             I_y = I_x;
+            Perimeter = posNeg * 2 * radius;
         }
 
         public Shape(List<double[]> coordinates, bool void_)
@@ -64,7 +69,7 @@ namespace PrestressedConcrete
             else { posNeg = 1; }
 
             double[,] coords = new double[2, coordinates.Count + 1];
-            double area = 0, cg_x = 0, cg_y = 0, i_x = 0, i_y = 0;
+            double area = 0, cg_x = 0, cg_y = 0, i_x = 0, i_y = 0, perim = 0;
             int coordIndex = 0;
             foreach (double[] coord in coordinates)
             {
@@ -82,13 +87,15 @@ namespace PrestressedConcrete
                 cg_y += (coords[1, i] + coords[1, i + 1]) * (coords[0, i + 1] * coords[1, i] - coords[0, i] * coords[1, i + 1]);
                 i_x += (Math.Pow(coords[1, i], 2) + coords[1, i] * coords[1, i + 1] + Math.Pow(coords[1, i + 1], 2)) * (coords[0, i] * coords[1, i + 1] - coords[0, i + 1] * coords[1, i]) / 12;
                 i_y += (Math.Pow(coords[0, i], 2) + coords[0, i] * coords[0, i + 1] + Math.Pow(coords[0, i + 1], 2)) * (coords[0, i] * coords[1, i + 1] - coords[0, i + 1] * coords[1, i]) / 12;
+                perim += Math.Sqrt(Math.Pow(coords[0, i] - coords[0, i + 1], 2) + Math.Pow(coords[1, i] - coords[1, i + 1], 2));
                 i++;
             }
-            Area = posNeg * area;
+            Area = posNeg * Math.Abs(area);
             CG_x = cg_x / (6 * area);
             CG_y = cg_y / (6 * area);
-            I_x = posNeg * (i_x + area * Math.Pow(CG_y, 2));
-            I_y = posNeg * (i_y + area * Math.Pow(CG_x, 2));
+            I_x = posNeg * Math.Abs(i_x + area * Math.Pow(CG_y, 2));
+            I_y = posNeg * Math.Abs(i_y + area * Math.Pow(CG_x, 2));
+            Perimeter = perim;
 
         }
 
@@ -101,7 +108,7 @@ namespace PrestressedConcrete
             else if (!xSymmetric && !ySymmetric) { coordMult = 1; }
             else { coordMult = 2; }
             double[,] coords = new double[2, xCoords.Length * coordMult + 1];
-            double area = 0, cg_x = 0, cg_y = 0, i_x = 0, i_y = 0;
+            double area = 0, cg_x = 0, cg_y = 0, i_x = 0, i_y = 0, perim = 0;
             if (xCoords.Length == yCoords.Length)
             {
                 int coordIndex = 0;
@@ -143,14 +150,16 @@ namespace PrestressedConcrete
                     cg_y += (coords[1, i] + coords[1, i + 1]) * (coords[0, i + 1] * coords[1, i] - coords[0, i] * coords[1, i + 1]);
                     i_x += (Math.Pow(coords[1, i], 2) + coords[1, i] * coords[1, i + 1] + Math.Pow(coords[1, i + 1], 2)) * (coords[0, i] * coords[1, i + 1] - coords[0, i + 1] * coords[1, i]) / 12;
                     i_y += (Math.Pow(coords[0, i], 2) + coords[0, i] * coords[0, i + 1] + Math.Pow(coords[0, i + 1], 2)) * (coords[0, i] * coords[1, i + 1] - coords[0, i + 1] * coords[1, i]) / 12;
+                    perim += Math.Sqrt(Math.Pow(coords[0, i] - coords[0, i + 1], 2) + Math.Pow(coords[1, i] - coords[1, i + 1], 2));
                     i++;
                 }
             }
-            Area = posNeg * area;
+            Area = posNeg * Math.Abs(area);
             CG_x = cg_x / (6 * area);
             CG_y = cg_y / (6 * area);
-            I_x = posNeg * (i_x + area * Math.Pow(CG_y, 2));
-            I_y = posNeg * (i_y + area * Math.Pow(CG_x, 2));
+            I_x = posNeg * Math.Abs(i_x + area * Math.Pow(CG_y, 2));
+            I_y = posNeg * Math.Abs(i_y + area * Math.Pow(CG_x, 2));
+            Perimeter = perim;
 
         }
 

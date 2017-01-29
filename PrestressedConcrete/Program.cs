@@ -22,6 +22,7 @@ namespace PrestressedConcrete
             Polygon polygon = new Polygon(xCoords, yCoords, false, true, false);
 
             Console.WriteLine("Area of polygon is {0}", polygon.Area);
+            Console.WriteLine("Perimeter of polygon is {0}", polygon.Perimeter);
             Console.WriteLine("NA of polygon is x = {0}, y = {1}", polygon.CG_x, polygon.CG_y);
             Console.WriteLine("Moment of Inertia about x axis is {0}", polygon.I_x);
             Console.ReadLine();
