@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Beam.cs" />
     <Compile Include="Circle.cs" />
+    <Compile Include="Concrete.cs" />
     <Compile Include="Polygon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
