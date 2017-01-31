@@ -49,21 +49,22 @@ namespace PrestressedConcrete
         public Concrete(double f_c, double f_ci, double densityForWeight, double densityForModElast, double k_1)
         {
             this.f_c = f_c;
+            this.f_ci = f_ci;
             K_1 = k_1; DensityForModElast = densityForModElast; DensityForWeight = densityForWeight;
             E_c = modElastCode(k_1, densityForModElast, f_c);
             E_ci = modElastCode(k_1, densityForModElast, f_ci);
         }
 
 
-        public void ModElast(double f_c, double density)
+        public void ModElast(double f_c, double density, double k_1)
         {
-            E_c = modElastCode(K_1, density, f_c);
+            E_c = modElastCode(k_1, density, f_c);
         }
 
-        public void ModElast(double f_c, double f_ci, double density)
+        public void ModElast(double f_c, double f_ci, double density, double k_1)
         {
-            E_c = modElastCode(K_1, density, f_c);
-            E_ci = modElastCode(K_1, density, f_ci);
+            E_c = modElastCode(k_1, density, f_c);
+            E_ci = modElastCode(k_1, density, f_ci);
         }
     }
 }

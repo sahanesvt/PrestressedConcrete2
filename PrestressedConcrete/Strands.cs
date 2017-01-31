@@ -18,8 +18,8 @@ namespace PrestressedConcrete
         public double f_py { get; private set; }
         public double JackingRatio { get; set; }
         public double f_pbt { get; private set; }
-        public double f_e { get; private set; }
-        public double f_j { get; private set; }
+        public double f_pe { get; private set; }
+        public double f_pj { get; private set; }
         public double f_po { get; private set; }
         public double f_ps { get; private set; }
         public double f_pt { get; private set; }
@@ -53,7 +53,23 @@ namespace PrestressedConcrete
             E_p = 28500;
         }
 
-        public void 
+        public void SetProperties(double f_pu, bool lowRelaxation)
+        {
+            this.f_pu = f_pu;
+            if (lowRelaxation)
+            {
+                f_py = 0.9 * f_pu;
+                JackingRatio = 0.75;
+            }
+            else
+            {
+                f_py = 0.85 * f_pu;
+                JackingRatio = 0.7;
+            }
+            f_pj = JackingRatio * f_pu;
+        }
+
+         
 
     }
 }
